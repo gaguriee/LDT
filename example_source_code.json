@@ -1,0 +1,20 @@
+[
+    {
+        "filename": "/Users/user/Desktop/projects/vsolution/tworldfriends/laravel/app/Http/Controllers/Manager/Supervisor/ManagerController.php",
+        "sourceCode": "    public function index(Request $request)\n    {\n        $keyword = $request->input('keyword', false);\n        $abilities = $request->input('abilities', false);\n        $needsUpdate = $request->boolean('needs_update');\n        $swingId = $request->boolean('swing_id');\n\n        $query = Manager::query()->has('department');\n\n        if ($keyword) {\n            $query->where(function ($query) use ($keyword) {\n                $query->orWhere('name', 'like', '%' . $keyword . '%')\n                    ->orWhere('username', 'like', '%' . $keyword . '%');\n            });\n        }\n\n        if ($abilities) {\n            $query->whereJsonContains('abilities', $abilities);\n            $query->whereJsonLength('abilities', count($abilities));\n        }\n\n        if ($request->has('swing_id')) {\n            $swingId\n                ? $query->whereNotNull('swing_id')\n                : $query->whereNull('swing_id');\n        }\n\n        if ($request->has('needs_update')) {\n            $query->where('needs_update', $needsUpdate);\n        }\n\n        return new ManagerCollection(\n            $query->orderByDesc('first_logged_at')->paginate()\n        );\n    }\n",
+        "fileComment": "/**\n * @tags \uad00\ub9ac\uc790(\ubcf8\uc0ac)\n */",
+        "methodComment": "/**\n     * @see ManagerCollection::toArray\n     * @see SimpleDepartmentResource::toArray\n     *\n     * @param Request $request\n     * @return ManagerCollection\n     */"
+    },
+    {
+        "filename": "/Users/user/Desktop/projects/vsolution/tworldfriends/laravel/app/Http/Resources/ManagerCollection.php",
+        "sourceCode": "    public function toArray($request)\n    {\n        return $this->collection->map(function ($manager) {\n            return [\n                'id' => $manager->id,\n\n                'name' => $manager->name,\n                'email' => $manager->email,\n                'tel_number' => $manager->tel_number,\n                'swing_id' => $manager->swing_id,\n                'username' => $manager->username,\n\n                'role' => $manager->role,\n                'abilities' => $manager->abilities,\n                'needs_update' => $manager->needs_update,\n\n                'department' => new SimpleDepartmentResource($manager->department),\n\n                'created_at' => optional($manager->created_at)->toISOString(true),\n                'updated_at' => optional($manager->updated_at)->toISOString(true),\n            ];\n        });\n    }\n",
+        "fileComment": "",
+        "methodComment": ""
+    },
+    {
+        "filename": "/Users/user/Desktop/projects/vsolution/tworldfriends/laravel/app/Http/Resources/SimpleDepartmentResource.php",
+        "sourceCode": "    public function toArray($request)\n    {\n        return [\n            'code' => $this->code,\n            'name' => $this->name,\n            'type' => $this->type,\n        ];\n    }\n",
+        "fileComment": "/**\n * @mixin Department\n */",
+        "methodComment": ""
+    }
+]

@@ -13,7 +13,7 @@ paths:
       tags:
         - 매니저 관리
       summary: Retrieve a list of managers
-      description: This endpoint returns a paginated list of managers based on the provided filters.
+      description: This endpoint retrieves a list of managers based on specified criteria.
       parameters:
         - name: keyword
           in: query
@@ -70,7 +70,14 @@ paths:
                   needs_update:
                     type: boolean
                   department:
-                    $ref: '#/components/schemas/SimpleDepartmentResource'
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      name:
+                        type: string
+                      type:
+                        type: string
                   created_at:
                     type: string
                   updated_at:
@@ -81,22 +88,26 @@ paths:
           description: Internal server error
       security:
         - bearerAuth: []
-
-components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-  schemas:
-    SimpleDepartmentResource:
-      type: object
-      properties:
-        code:
-          type: string
-        name:
-          type: string
-        type:
-          type: string
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              keyword:
+                type: string
+                example: "John"
+              abilities:
+                type: array
+                items:
+                  type: string
+                example: ["communication", "leadership"]
+              needs_update:
+                type: boolean
+                example: true
+              swing_id:
+                type: boolean
+                example: true
 ```
 ```yaml
 openapi: 3.1.0
@@ -113,7 +124,7 @@ paths:
       tags:
         - 매니저 관리
       summary: Retrieve a list of managers
-      description: This endpoint returns a paginated list of managers based on the provided filters.
+      description: This endpoint retrieves a list of managers based on specified criteria.
       parameters:
         - name: keyword
           in: query
@@ -170,7 +181,14 @@ paths:
                   needs_update:
                     type: boolean
                   department:
-                    $ref: '#/components/schemas/SimpleDepartmentResource'
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      name:
+                        type: string
+                      type:
+                        type: string
                   created_at:
                     type: string
                   updated_at:
@@ -181,20 +199,24 @@ paths:
           description: Internal server error
       security:
         - bearerAuth: []
-
-components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-  schemas:
-    SimpleDepartmentResource:
-      type: object
-      properties:
-        code:
-          type: string
-        name:
-          type: string
-        type:
-          type: string
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              keyword:
+                type: string
+                example: "John"
+              abilities:
+                type: array
+                items:
+                  type: string
+                example: ["communication", "leadership"]
+              needs_update:
+                type: boolean
+                example: true
+              swing_id:
+                type: boolean
+                example: true
 ```
