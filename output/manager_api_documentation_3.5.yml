@@ -1,0 +1,200 @@
+```yaml
+openapi: 3.1.0
+info:
+  title: 매니저 관리 API
+  version: 0.0.1
+servers:
+  - url: https://admin.tworldfriends.co.kr/supervisor/managers
+    description: Main endpoint
+paths:
+  "/supervisor/managers":
+    get:
+      operationId: manager.index
+      tags:
+        - 매니저 관리
+      summary: Retrieve a list of managers
+      description: This endpoint returns a paginated list of managers based on the provided filters.
+      parameters:
+        - name: keyword
+          in: query
+          required: false
+          schema:
+            type: string
+          example: "John"
+        - name: abilities
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          example: ["communication", "leadership"]
+        - name: needs_update
+          in: query
+          required: false
+          schema:
+            type: boolean
+          example: true
+        - name: swing_id
+          in: query
+          required: false
+          schema:
+            type: boolean
+          example: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  tel_number:
+                    type: string
+                  swing_id:
+                    type: string
+                  username:
+                    type: string
+                  role:
+                    type: string
+                  abilities:
+                    type: array
+                    items:
+                      type: string
+                  needs_update:
+                    type: boolean
+                  department:
+                    $ref: '#/components/schemas/SimpleDepartmentResource'
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+      security:
+        - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    SimpleDepartmentResource:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+```
+```yaml
+openapi: 3.1.0
+info:
+  title: 매니저 관리 API
+  version: 0.0.1
+servers:
+  - url: https://admin.tworldfriends.co.kr/supervisor/managers
+    description: Main endpoint
+paths:
+  "/supervisor/managers":
+    get:
+      operationId: manager.index
+      tags:
+        - 매니저 관리
+      summary: Retrieve a list of managers
+      description: This endpoint returns a paginated list of managers based on the provided filters.
+      parameters:
+        - name: keyword
+          in: query
+          required: false
+          schema:
+            type: string
+          example: "John"
+        - name: abilities
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          example: ["communication", "leadership"]
+        - name: needs_update
+          in: query
+          required: false
+          schema:
+            type: boolean
+          example: true
+        - name: swing_id
+          in: query
+          required: false
+          schema:
+            type: boolean
+          example: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  tel_number:
+                    type: string
+                  swing_id:
+                    type: string
+                  username:
+                    type: string
+                  role:
+                    type: string
+                  abilities:
+                    type: array
+                    items:
+                      type: string
+                  needs_update:
+                    type: boolean
+                  department:
+                    $ref: '#/components/schemas/SimpleDepartmentResource'
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+      security:
+        - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    SimpleDepartmentResource:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+```

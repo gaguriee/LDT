@@ -1,0 +1,143 @@
+```yaml
+openapi: 3.1.0
+info:
+  title: 매니저 관리 API
+  version: 0.0.1
+servers:
+  - url: https://admin.tworldfriends.co.kr/supervisor/managers
+    description: Main endpoint
+paths:
+  "/supervisor/managers":
+    get:
+      operationId: 매니저_관리.index
+      tags:
+        - 매니저 관리
+      summary: Retrieve a list of managers
+      description: Fetches a paginated list of managers with optional filters for keyword, abilities, swing_id, and needs_update.
+      parameters:
+        - name: keyword
+          in: query
+          required: false
+          schema:
+            type: string
+          example: "John"
+          description: Filter managers by name or username.
+        - name: abilities
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          example: ["leadership", "communication"]
+          description: Filter managers by specific abilities.
+        - name: swing_id
+          in: query
+          required: false
+          schema:
+            type: boolean
+          example: true
+          description: Filter managers by presence of swing_id.
+        - name: needs_update
+          in: query
+          required: false
+          schema:
+            type: boolean
+          example: false
+          description: Filter managers by their update status.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Manager'
+                  links:
+                    type: object
+                    properties:
+                      first:
+                        type: string
+                      last:
+                        type: string
+                      prev:
+                        type: string
+                        nullable: true
+                      next:
+                        type: string
+                        nullable: true
+                  meta:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                      from:
+                        type: integer
+                      last_page:
+                        type: integer
+                      path:
+                        type: string
+                      per_page:
+                        type: integer
+                      to:
+                        type: integer
+                      total:
+                        type: integer
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+      security:
+        - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    Manager:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        tel_number:
+          type: string
+        swing_id:
+          type: string
+          nullable: true
+        username:
+          type: string
+        role:
+          type: string
+        abilities:
+          type: array
+          items:
+            type: string
+        needs_update:
+          type: boolean
+        department:
+          $ref: '#/components/schemas/SimpleDepartment'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    SimpleDepartment:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+```

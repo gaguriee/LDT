@@ -1,0 +1,84 @@
+Analyze the provided source code and create a detailed API documentation in openapi.yml format. 
+
+Source code:
+{source_code}
+
+api_name:
+{api_name}
+
+api_endpoint:
+{api_endpoint}
+
+Repeat the structure for each endpoint, including:
+- Required/optional status for parameters and request body properties
+- Field types
+- Full endpoint paths
+- Header information (if applicable)
+- Example values for request body properties and parameters
+- Summary and description for each endpoint
+
+Write the following format:
+
+openapi: 3.1.0
+info:
+  title: {{api_name}} API
+  version: 0.0.1
+servers:
+  - url: {{api_endpoint}}
+    description: Main endpoint
+paths:
+  "{{api_endpoint}}":
+    get:
+      operationId: {{api_name}}.index
+      tags:
+        - {{api_name}}
+      summary: Brief description of the endpoint
+      description: Description of the endpoint functionality
+      parameters:
+        - name: parameter1
+          in: query
+          required: true  # Indicate if the parameter is required or optional
+          schema:
+            type: string  # Specify the field type
+          example: "Example value"  # Provide an example value
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                property1:
+                  type: string
+                  example: "Example value"  # Provide an example value
+                  
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  property1:
+                    type: string
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+      security:
+        - bearerAuth: []  # Include header information if applicable
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    ExampleResource:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+
